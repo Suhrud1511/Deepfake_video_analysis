@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Video</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000000;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      width: 600px;
+    }
+
+    .upload-btn:hover,
+    .upload-btn:focus {
+      transform: scale(1.05);
+    }
+
+    .upload-btn-green {
+      background-color: #4CAF50;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mx-auto">
+    <form action="/" method="post" enctype="multipart/form-data"
+      class="form-container flex flex-col items-center space-y-4 p-8 bg-gray-900 rounded-lg shadow-lg">
+      <h1 class="text-3xl font-semibold text-white">Upload a Video</h1>
+      <label for="file"
+        class="px-6 py-3 bg-gray-800 text-white rounded-lg cursor-pointer hover:bg-gray-700 transition duration-300 ease-in-out upload-btn">Choose
+        File
+        <input type="file" name="file" id="file" accept="video/*" class="hidden" onchange="checkUploadButtonColor()">
+      </label>
+      <button type="submit"
+        class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out"
+        id="upload-btn" disabled>Upload</button>
+    </form>
+  </div>
+
+  <script>
+    function checkUploadButtonColor() {
+      var uploadBtn = document.getElementById('upload-btn');
+      var fileInput = document.getElementById('file');
+      if (fileInput.files.length > 0) {
+        uploadBtn.removeAttribute('disabled');
+        uploadBtn.classList.add('upload-btn-green');
+      } else {
+        uploadBtn.setAttribute('disabled', 'disabled');
+        uploadBtn.classList.remove('upload-btn-green');
+      }
+    }
+  </script>
+</body>
+
+</html>

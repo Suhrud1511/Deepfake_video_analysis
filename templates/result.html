@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deepfake Detection Result</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #1a1a1a;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .image-container {
+      width: 600px;
+      border: 2px solid #FFFFFF;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .bounding-box {
+      position: absolute;
+      border: 2px solid;
+
+        {
+        % if color=='green' %
+      }
+
+      border-color: #34d399;
+
+      /* Green color for real */
+        {
+        % elif color=='red' %
+      }
+
+      border-color: #ef4444;
+
+      /* Red color for fake */
+        {
+        % endif %
+      }
+
+      box-sizing: border-box;
+
+      top: {
+          {
+          bbox_y
+        }
+      }
+
+      %;
+
+      left: {
+          {
+          bbox_x
+        }
+      }
+
+      %;
+
+      width: {
+          {
+          bbox_width
+        }
+      }
+
+      %;
+
+      height: {
+          {
+          bbox_height
+        }
+      }
+
+      %;
+    }
+
+    .label {
+      position: absolute;
+      background-color: #FFFFFF;
+      padding: 5px;
+      font-weight: bold;
+      border-radius: 4px;
+      text-transform: uppercase;
+      top: 10px;
+      left: 10px;
+    }
+
+    .confidence-container {
+      background-color: #000000;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+
+    .confidence {
+      margin: 0;
+    }
+
+    .video-container {
+      width: 100%;
+      max-width: 800px;
+    }
+
+    video {
+      width: 100%;
+    }
+
+    .back-button {
+      background-color: #2563eb;
+      color: #FFFFFF;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .back-button:hover {
+      background-color: #ef4444;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="image-container">
+      <img src="data:image/jpeg;base64,{{ encoded_frames[0] }}" class="image">
+      <div class="bounding-box"></div>
+      <div class="label">
+        {{ result }}
+      </div>
+    </div>
+    <div class="confidence-container">
+      <p class="confidence">Confidence: {{ confidence }}</p>
+    </div>
+    <div class="video-container">
+      <video controls>
+        <source src="data:video/mp4;base64,{{ encoded_video }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <button class="back-button" onclick="window.history.back()">Back</button>
+  </div>
+  <script>
+    // Get the bounding box element
+    var boundingBox = document.querySelector('.bounding-box');
+
+    // Set the bounding box position and size
+    boundingBox.style.top = "{{ bbox_y }}%";
+    boundingBox.style.left = "{{ bbox_x }}%";
+    boundingBox.style.width = "{{ bbox_width }}%";
+    boundingBox.style.height = "{{ bbox_height }}%";
+  </script>
+</body>
+
+</html>
