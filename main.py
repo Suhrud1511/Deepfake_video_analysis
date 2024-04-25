@@ -99,7 +99,7 @@ def upload_video():
             
             # Encode the video to base64 format
             encoded_video = encode_video(video_filename)
-
+        
             return render_template('result.html', result=classification_result, color=color, encoded_frames=encoded_frames, encoded_video=encoded_video)
             
         return render_template('index.html')
@@ -124,7 +124,7 @@ def classify_frame(frame,check_fake):
         result = "Fake" if prediction <= 0.5 else "Real"
         color = "red" if result == "Fake" else "green"
         print(prediction)
-        return result, color
+        return result, prediction
 
 def encode_image(frame):
         _, img_bytes = cv2.imencode('.jpg', frame)
